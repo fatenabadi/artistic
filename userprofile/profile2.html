@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Lover Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cover-photo-container">
+        <div class="cover-photo" id="coverPhoto">
+            <button class="edit-btn" id="editCoverBtn">
+                <i class="fas fa-camera"></i>
+            </button>
+        </div>
+        <div class="profile-picture-container">
+            <div class="profile-picture" id="profilePicture">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-info">
+        <div class="username">
+            <span id="usernameText">Art Lover</span>
+            <span class="username-edit" id="editUsernameBtn">
+                <i class="fas fa-pen"></i>
+            </span>
+            <input type="text" id="usernameInput" class="form-control" style="display: none; max-width: 300px; margin: 0 auto;">
+        </div>
+        <div class="user-bio empty" id="userBio"></div>
+        <textarea id="bioInput" class="form-control" style="display: none; max-width: 500px; margin: 0 auto;" placeholder="Tell us about your artistic journey..."></textarea>
+    </div>
+
+    <div class="artist-form-container">
+        <div class="artist-form">
+            <div class="form-header">
+                <h2 class="form-title">Artistic Profile</h2>
+                <p class="form-subtitle">Complete your profile in 3 simple steps</p>
+            </div>
+
+            <div class="step-progress" style="--progress: 0">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-name">Basic Info</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-name">Art Preferences</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-name">Review</div>
+                </div>
+            </div>
+
+            <div class="form-step active" id="step-1">
+                <div class="form-group">
+                    <label class="form-label required">Your Name</label>
+                    <input type="text" class="form-control" id="displayName" placeholder="What should we call you?" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" placeholder="Where are you based?">
+                </div>
+
+                <div class="btn-container">
+                    <div></div>
+                    <button class="btn btn-primary" onclick="nextStep(1)">Continue <i class="fas fa-arrow-right ms-2"></i></button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step-2">
+                <div class="form-group">
+                    <label class="form-label required">Favorite Art Style</label>
+                    <select class="form-control" id="artStyle" required>
+                        <option value="">Select your favorite</option>
+                        <option>Abstract</option>
+                        <option>Realism</option>
+                        <option>Impressionism</option>
+                        <option>Surrealism</option>
+                        <option>Contemporary</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Favorite Artists</label>
+                    <input type="text" class="form-control" id="favoriteArtists" placeholder="Who inspires you?">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Preferred Mediums</label>
+                    <input type="text" class="form-control" id="preferredMediums" placeholder="What materials do you love?">
+                </div>
+
+                <div class="btn-container">
+                    <button class="btn btn-secondary" onclick="prevStep(2)"><i class="fas fa-arrow-left me-2"></i> Back</button>
+                    <button class="btn btn-primary" onclick="nextStep(2)">Continue <i class="fas fa-arrow-right ms-2"></i></button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step-3">
+                <h5 class="mb-4">Review Your Information</h5>
+
+                <div class="review-item">
+                    <div class="review-label">Name:</div>
+                    <div class="review-value" id="review-name">-</div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-label">Email:</div>
+                    <div class="review-value" id="review-email">-</div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-label">Location:</div>
+                    <div class="review-value" id="review-location">-</div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-label">Favorite Style:</div>
+                    <div class="review-value" id="review-style">-</div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-label">Favorite Artists:</div>
+                    <div class="review-value" id="review-artists">-</div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-label">Preferred Mediums:</div>
+                    <div class="review-value" id="review-mediums">-</div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                        <label class="form-check-label" for="termsAgreement">I agree to the <a href="#">community guidelines</a></label>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button class="btn btn-secondary" onclick="prevStep(3)"><i class="fas fa-arrow-left me-2"></i> Back</button>
+                    <button class="btn btn-primary" onclick="submitProfile()">Complete Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="artist-form-container">
+        <div class="favorite-works">
+            <div class="works-header">
+                <h3 class="works-title">My Favorite Artworks</h3>
+            </div>
+            <div class="works-grid" id="worksGrid">
+                <div class="empty-works">
+                    <p>Your favorite artworks will appear here as you browse the site</p>
+                    <button class="btn btn-secondary mt-3" onclick="addSampleWork()">
+                        <i class="fas fa-plus me-2"></i>Add Sample Artwork
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="coverPhotoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Cover Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <label class="form-label">Upload your own image</label>
+                        <input type="file" class="form-control" id="coverPhotoUpload" accept="image/*">
+                    </div>
+                    <div>
+                        <p class="mb-2">Artistic suggestions:</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
+                                 class="img-thumbnail" style="width: 100px; height: 70px; object-fit: cover; cursor: pointer;"
+                                 onclick="selectCoverImage(this.src)">
+                            <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
+                                 class="img-thumbnail" style="width: 100px; height: 70px; object-fit: cover; cursor: pointer;"
+                                 onclick="selectCoverImage(this.src)">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
+                                 class="img-thumbnail" style="width: 100px; height: 70px; object-fit: cover; cursor: pointer;"
+                                 onclick="selectCoverImage(this.src)">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveCoverPhoto()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="profilePictureModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Profile Picture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <label class="form-label">Upload your photo</label>
+                        <input type="file" class="form-control" id="profilePictureUpload" accept="image/*">
+                    </div>
+                    <div>
+                        <p class="mb-2">Or choose an avatar:</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <div class="avatar-option" onclick="selectAvatar('1')">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <div class="avatar-option" onclick="selectAvatar('2')">
+                                <i class="fas fa-user-astronaut"></i>
+                            </div>
+                            <div class="avatar-option" onclick="selectAvatar('3')">
+                                <i class="fas fa-user-ninja"></i>
+                            </div>
+                            <div class="avatar-option" onclick="selectAvatar('4')">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="avatar-option" onclick="selectAvatar('5')">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="avatar-option" onclick="selectAvatar('6')">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProfilePicture()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+                    </div>
+                    <h3 class="mb-3">Profile Complete!</h3>
+                    <p class="text-muted">Your artistic profile is now ready</p>
+                    <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">View Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="artistic-footer">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <div class="footer-brand mb-4">
+                        <h3 class="text-primary-footer mb-3">ArtHub</h3>
+                        <p class="small">Where creativity meets community</p>
+                    </div>
+                    <div class="social-grid">
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Behance">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="ArtStation">
+                            <i class="fab fa-artstation"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-6">
+                    <h5 class="text-primary-footer mb-4">Create</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Challenges</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Tutorials</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Resources</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Workshops</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-6">
+                    <h5 class="text-primary-footer mb-4">Community</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Gallery</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Forum</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Events</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary-footer">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-6">
+                    <h5 class="text-primary-footer mb-4">Contact</h5>
+                    <div class="mb-3">
+                        <p class="small mb-1"><i class="fas fa-map-marker-alt me-2"></i>123 Art Street, Creative City</p>
+                        <p class="small mb-1"><i class="fas fa-envelope me-2"></i>contact@arthub.com</p>
+                        <p class="small"><i class="fas fa-phone me-2</i>+1 (555) ART-HUB</p>
+</div>
+<div class="art-gallery">
+    <div class="row g-2">
+        <div class="col-4"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded" alt="Artwork 1"></div>
+        <div class="col-4"><img src="https://images.unsplash.com/photo-1531147646552-1eec68116469?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded" alt="Artwork 2"></div>
+        <div class="col-4"><img src="https://images.unsplash.com/photo-1617854818583-09e7f077a156?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG0dG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" class="img-fluid rounded" alt="Artwork 3"></div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="border-top pt-4 mt-5 text-center">
+<p class="small mb-0 text-secondary-footer">
+© 2025 ArtHub. All rights reserved.
+<a href="#" class="text-secondary-footer">Privacy</a> |
+<a href="#" class="text-secondary-footer">Terms</a> |
+<a href="#" class="text-secondary-footer">FAQs</a>
+</p>
+</div>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
